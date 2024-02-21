@@ -1,0 +1,46 @@
+state:
+const [name, setName] = useState('');
+const [room, setRoom] = useState('');
+const [isTyping, setIsTyping] = useState(false);
+const [joined, setJoined] = useState(false);
+
+
+in useEffect
+- const someoneTyping = (data) => {
+      setIsTyping(true);
+      setTimeout(() => setIsTyping(false), 1000); // Hide typing indicator after some time
+    };
+- socket.on('typing', someoneTyping);
+
+const handleTyping = () => {
+    socket.emit('typing', { name, room });
+};
+
+in return
+socket.off('typing', someoneTyping);
+
+  
+
+in jsx
+{isTyping && <div className="p-2">Someone is typing...</div>}
+
+
+
+after useEffect (JOIN)
+const joinRoom = (room, name) => {
+    if (room.length === 5 && name) { // Simple validation for 5-digit code and non-empty name
+        socket.emit('join room', { name, room });
+        setName(name);
+        setRoom(room);
+        setJoined(true);
+    }
+};
+    socket.emit('chat message', { name, room, msg: message });
+
+${msg.name}: ${msg.msg}
+
+if (!joined) {
+    return (
+      <JoinRoom onJoin={(joinRoom)} />
+    );
+  }

@@ -1,0 +1,12 @@
+  socket.on('typing', (data) => {
+    socket.emit('typing', data);
+  });
+
+
+When a user joins a room
+  socket.on('join room', ({ name, room }) => {
+    console.log(`${name} joined room: ${room}`);
+    socket.join(room);
+    // Broadcast to the room that a new user has joined
+    socket.to(room).emit('chat message', { name: 'System', msg: `${name} has joined the chat!` });
+  });
